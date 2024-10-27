@@ -1,39 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { Calendar, MapPin, Heart } from "lucide-react";
 
-const EventCard = ({ event, onClick, openModal }) => {
+const EventCard = ({ event, openModal, handleLikePost, likedPosts }) => {
   const [isLiked, setIsLiked] = useState(false);
-  const [likedPosts, setLikedPosts] = useState(() => {
-    const savedLikedPosts = localStorage.getItem("likedPosts");
-    return savedLikedPosts ? JSON.parse(savedLikedPosts) : [];
-  });
 
   useEffect(() => {
     setIsLiked(likedPosts.some((likedEvent) => likedEvent.id === event.id));
   }, [likedPosts, event.id]);
 
-  const handleLike = () => {
-    setLikedPosts((prevLikedPosts) => {
-      let updatedLikedPosts;
-
-      if (isLiked) {
-        updatedLikedPosts = prevLikedPosts.filter((likedEvent) => likedEvent.id !== event.id);
-      } else {
-        updatedLikedPosts = [...prevLikedPosts, event];
-      }
-
-      localStorage.setItem("likedPosts", JSON.stringify(updatedLikedPosts));
-
-      return updatedLikedPosts;
-    });
-
-    setIsLiked(!isLiked);
-  };
-
   return (
     <div
-      onClick={onClick}
       className="relative rounded-xl overflow-hidden group cursor-pointer transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl"
+      onClick={() => openModal(event)}
     >
       <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
       <img
@@ -49,8 +27,8 @@ const EventCard = ({ event, onClick, openModal }) => {
             </h3>
             <button
               onClick={(e) => {
-                e.stopPropagation();
-                handleLike();
+                e.stopPropagation(); 
+                handleLikePost(event); 
               }}
               className={`p-2 rounded-full ${
                 isLiked ? "bg-red-500" : "bg-white/20"
@@ -58,9 +36,7 @@ const EventCard = ({ event, onClick, openModal }) => {
             >
               <Heart
                 size={16}
-                className={`${
-                  isLiked ? "text-white fill-current" : "text-white"
-                }`}
+                className={`${isLiked ? "text-white fill-current" : "text-white"}`}
               />
             </button>
           </div>

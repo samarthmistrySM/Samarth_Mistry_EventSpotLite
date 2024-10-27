@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 
@@ -8,7 +8,7 @@ import EventModal from "./components/EventModal";
 import Loader from "./components/Loader";
 import Navbar from "./components/Navbar";
 import Hamburger from "./components/Hamburger";
-import LikedEvents from "./components/LikedEvents"; 
+import LikedEvents from "./components/LikedEvents";
 import events from "./mockData";
 
 gsap.registerPlugin(useGSAP);
@@ -24,15 +24,28 @@ const App = () => {
   const mainRef = useRef(null);
   const filterRef = useRef(null);
 
-  // Fetch liked posts from localStorage
   const [likedPosts, setLikedPosts] = useState(() => {
     const savedLikedPosts = localStorage.getItem("likedPosts");
     return savedLikedPosts ? JSON.parse(savedLikedPosts) : [];
   });
 
+  // Update localStorage whenever likedPosts changes
   useEffect(() => {
     localStorage.setItem("likedPosts", JSON.stringify(likedPosts));
   }, [likedPosts]);
+
+  const handleLikePost = (event) => {
+    setLikedPosts((prevLikedPosts) => {
+      const isAlreadyLiked = prevLikedPosts.some(
+        (likedEvent) => likedEvent.id === event.id
+      );
+      if (isAlreadyLiked) {
+        return prevLikedPosts.filter((likedEvent) => likedEvent.id !== event.id);
+      } else {
+        return [...prevLikedPosts, event];
+      }
+    });
+  };
 
   useGSAP(() => {
     const ctx = gsap.context(() => {
@@ -138,7 +151,8 @@ const App = () => {
                       key={index}
                       event={event}
                       openModal={openModal}
-                      setLikedPosts={setLikedPosts}
+                      handleLikePost={handleLikePost} 
+                      likedPosts={likedPosts} 
                     />
                   ))}
                 </div>
@@ -146,8 +160,10 @@ const App = () => {
             }
           />
           <Route
-            path="/liked-events"
-            element={<LikedEvents openModal={openModal} likedPosts={likedPosts} />}
+            path="/liked"
+            element={
+              <LikedEvents openModal={openModal} handleLikePost={handleLikePost} likedPosts={likedPosts} />
+            }
           />
         </Routes>
 
