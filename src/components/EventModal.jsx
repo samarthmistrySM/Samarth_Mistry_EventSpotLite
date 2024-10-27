@@ -4,8 +4,8 @@ const EventModal = ({ event, isOpen, onClose }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50">
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg w-full max-w-lg md:max-w-3xl p-6 md:p-8 relative overflow-hidden">
+    <div className="fixed inset-0 h-screen bg-black/70 flex items-center justify-center z-50">
+      <div className="bg-white relative dark:bg-gray-800 rounded-lg shadow-lg w-full max-w-lg md:max-w-3xl p-6 md:p-8 overflow-hidden">
         <button
           onClick={onClose}
           className="absolute top-2 right-2 font-bold px-3 py-1 bg-red-500 text-white rounded dark:text-gray-300 hover:bg-red-600"
@@ -62,7 +62,7 @@ const EventModal = ({ event, isOpen, onClose }) => {
           ))}
           </div>
         </ol>
-        <button className="bg-blue-600 text-white px-6 py-2 mt-4 rounded-lg w-full hover:bg-blue-700 transition-colors duration-300">
+        <button onClick={onClose} className="bg-blue-600 text-white px-6 py-2 mt-4 rounded-lg w-full hover:bg-blue-700 transition-colors duration-300">
           Register Now
         </button>
       </div>
