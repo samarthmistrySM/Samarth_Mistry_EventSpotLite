@@ -5,22 +5,22 @@ const EventModal = ({ event, isOpen, onClose }) => {
 
   return (
     <div className="fixed inset-0 h-screen bg-black/70 flex items-center justify-center z-50">
-      <div className="bg-white relative dark:bg-gray-800 rounded-lg shadow-lg w-full max-w-lg md:max-w-3xl p-6 md:p-8 overflow-hidden">
+      <div className="bg-white relative dark:bg-gray-800 rounded-lg shadow-lg w-full max-w-lg md:max-w-3xl p-4 md:p-6">
         <button
           onClick={onClose}
-          className="absolute top-2 right-2 font-bold px-3 py-1 bg-red-500 text-white rounded dark:text-gray-300 hover:bg-red-600"
+          className="absolute top-2 right-2 font-bold px-2 py-1 bg-red-500 text-white rounded dark:text-gray-300 hover:bg-red-600 text-lg"
         >
           X
         </button>
         <img
           src={event.imgUrl}
           alt={event.title}
-          className="w-full h-48 md:h-64 object-cover rounded-lg mb-4"
+          className="w-full h-36 md:h-48 object-cover rounded-lg mb-4" // Adjusted height for smaller screens
         />
-        <h2 className="text-3xl font-bold mb-2 text-gray-800 dark:text-gray-100">
+        <h2 className="text-xl md:text-2xl font-bold mb-2 text-gray-800 dark:text-gray-100">
           {event.title}
         </h2>
-        <div className="flex flex-wrap justify-between mb-4">
+        <div className="flex flex-col md:flex-row justify-between mb-2">
           <p className="text-gray-600 dark:text-gray-300">
             <strong>Category:</strong> {event.category}
           </p>
@@ -28,7 +28,7 @@ const EventModal = ({ event, isOpen, onClose }) => {
             <strong>Rating:</strong> {event.rating}
           </p>
         </div>
-        <div className="flex flex-wrap justify-between mb-4">
+        <div className="flex flex-col md:flex-row justify-between mb-2">
           <p className="text-gray-600 dark:text-gray-300">
             <strong>Location:</strong> {event.location}
           </p>
@@ -39,7 +39,7 @@ const EventModal = ({ event, isOpen, onClose }) => {
         <p className="text-gray-800 dark:text-gray-100 font-semibold mb-2">
           <strong>Price:</strong> {event.price}
         </p>
-        <p className="text-gray-600 dark:text-gray-300 mb-2">
+        <p className="hidden md:block text-gray-600 dark:text-gray-300 mb-2">
           <strong>Description:</strong> {event.description}
         </p>
         <p className="text-gray-600 dark:text-gray-300 mb-2">
@@ -56,13 +56,16 @@ const EventModal = ({ event, isOpen, onClose }) => {
         </p>
         <ol className="text-gray-600 dark:text-gray-300 mb-4 list-decimal">
           <strong>Features:</strong>
-          <div className='px-4'>
-          {event.features.map((feature, index) => (
-            <li key={index}>{feature}</li>
-          ))}
+          <div className='px-2'>
+            {event.features.map((feature, index) => (
+              <li key={index} className="text-sm">{feature}</li> // Text size adjusted for readability
+            ))}
           </div>
         </ol>
-        <button onClick={onClose} className="bg-blue-600 text-white px-6 py-2 mt-4 rounded-lg w-full hover:bg-blue-700 transition-colors duration-300">
+        <button 
+          onClick={onClose} 
+          className="bg-blue-600 text-white px-4 py-2 mt-4 rounded-lg w-full hover:bg-blue-700 transition-colors duration-300 text-lg"
+        >
           Register Now
         </button>
       </div>
