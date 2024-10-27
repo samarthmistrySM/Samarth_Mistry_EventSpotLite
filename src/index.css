@@ -26,7 +26,6 @@ code {
   transform: translate(0,0) !important;
   display: block !important;
 }
-a.active{
+a.active, .dark a.active{
   color: rgb(0, 190, 200);
-  
 }

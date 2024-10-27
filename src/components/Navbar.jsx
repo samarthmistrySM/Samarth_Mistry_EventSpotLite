@@ -25,7 +25,7 @@ const Navbar = ({ toggleDarkMode, darkMode, toggleFilter, isFilterOpen }) => {
           </Link>
         </div>
       </div>
-      <div className="flex items-center gap-4 flex-wrap text-sm">
+      <div className="flex items-center gap-4 flex-wrap text-base">
         <NavLink to="/" className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 capitalize transition-colors duration-300">
           Events
         </NavLink>
